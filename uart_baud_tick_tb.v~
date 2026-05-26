@@ -1,0 +1,70 @@
+`timescale 1ns / 1ps
+module uart_baud_tick_tb();
+
+	reg clk;
+	reg rst_n;
+	reg start_edge;
+	reg rx_stable;
+
+	wire sample_now;
+	wire glitch_detected;
+
+
+	uart_baud_tick u_dut(
+		clk,
+		rst_n,
+		start_edge,
+		rs_stable,
+		sample_now,
+		glitch_detected
+	);
+
+	always #10 clk =~clk;
+
+	initial begin
+		
+		$dumpfile("baud_wave.vcd");
+		$dumpvars(0, uart_baud_tick_tb);
+
+		clk		= 0;
+		rst_n		= 0;
+		start_edge	= 0;
+		rx_stable	= 1;
+
+		#100;
+		rst_n		= 1;
+		#40;
+
+
+		$display("[%0t ns] STAGE 1: Testing REAL Start Bit....", $time);
+
+		rx_stable	= 1'b0;
+		#20;
+
+		start_edge	= 1'b1;
+		#20;
+		start_edge	= 1'b1;
+		#10000;
+
+
+		$display("[%0t ns] STAGE 2: Testing Glitch Defense....", $time);
+
+		rx_stable	= 1'b0;
+		#20;
+
+		start_edge	= 1'b1;
+		#20;
+		start_edge	= 1'b0;
+
+
+		#19500;
+		rx_stable	= 1'b1;
+
+		#35000;
+
+
+		$display("[%0t ns] All simulation finished", $time);
+		$finish;
+	end
+
+endmodule

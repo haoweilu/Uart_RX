@@ -1,0 +1,101 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1110-g18392a46)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_00000190a1d1bd30 .scope module, "uart_edge_det_tb" "uart_edge_det_tb" 2 3;
+ .timescale -9 -12;
+v00000190a1c22c90_0 .var "clk", 0 0;
+v00000190a1c22d30_0 .var "rst_n", 0 0;
+v00000190a1c22e70_0 .var "rx_sync1", 0 0;
+v00000190a1c235f0_0 .net "start_edge", 0 0, L_00000190a1d1bf60;  1 drivers
+S_00000190a1c17dc0 .scope module, "u_dut" "uart_edge_det" 2 11, 3 1 0, S_00000190a1d1bd30;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "rst_n";
+    .port_info 2 /INPUT 1 "rx_sync1";
+    .port_info 3 /OUTPUT 1 "start_edge";
+L_00000190a1d1bf60 .functor AND 1, L_00000190a1c22970, L_00000190a1c22f10, C4<1>, C4<1>;
+v00000190a1d1bae0_0 .net *"_ivl_0", 31 0, L_00000190a1c23550;  1 drivers
+L_00000190a1c71908 .functor BUFT 1, C4<0000000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v00000190a1c26950_0 .net *"_ivl_11", 30 0, L_00000190a1c71908;  1 drivers
+L_00000190a1c71950 .functor BUFT 1, C4<00000000000000000000000000000001>, C4<0>, C4<0>, C4<0>;
+v00000190a1d1bec0_0 .net/2u *"_ivl_12", 31 0, L_00000190a1c71950;  1 drivers
+v00000190a1c17f50_0 .net *"_ivl_14", 0 0, L_00000190a1c22f10;  1 drivers
+L_00000190a1c71878 .functor BUFT 1, C4<0000000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v00000190a1c17ff0_0 .net *"_ivl_3", 30 0, L_00000190a1c71878;  1 drivers
+L_00000190a1c718c0 .functor BUFT 1, C4<00000000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v00000190a1c18090_0 .net/2u *"_ivl_4", 31 0, L_00000190a1c718c0;  1 drivers
+v00000190a1c18130_0 .net *"_ivl_6", 0 0, L_00000190a1c22970;  1 drivers
+v00000190a1d16bb0_0 .net *"_ivl_8", 31 0, L_00000190a1c226f0;  1 drivers
+v00000190a1d16c50_0 .net "clk", 0 0, v00000190a1c22c90_0;  1 drivers
+v00000190a1c22bf0_0 .net "rst_n", 0 0, v00000190a1c22d30_0;  1 drivers
+v00000190a1c22b50_0 .var "rx_reg", 0 0;
+v00000190a1c22dd0_0 .net "rx_sync1", 0 0, v00000190a1c22e70_0;  1 drivers
+v00000190a1c232d0_0 .net "start_edge", 0 0, L_00000190a1d1bf60;  alias, 1 drivers
+E_00000190a1c15ca0/0 .event negedge, v00000190a1c22bf0_0;
+E_00000190a1c15ca0/1 .event posedge, v00000190a1d16c50_0;
+E_00000190a1c15ca0 .event/or E_00000190a1c15ca0/0, E_00000190a1c15ca0/1;
+L_00000190a1c23550 .concat [ 1 31 0 0], v00000190a1c22e70_0, L_00000190a1c71878;
+L_00000190a1c22970 .cmp/eq 32, L_00000190a1c23550, L_00000190a1c718c0;
+L_00000190a1c226f0 .concat [ 1 31 0 0], v00000190a1c22b50_0, L_00000190a1c71908;
+L_00000190a1c22f10 .cmp/eq 32, L_00000190a1c226f0, L_00000190a1c71950;
+    .scope S_00000190a1c17dc0;
+T_0 ;
+    %wait E_00000190a1c15ca0;
+    %load/vec4 v00000190a1c22bf0_0;
+    %nor/r;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %pushi/vec4 1, 0, 1;
+    %assign/vec4 v00000190a1c22b50_0, 0;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/vec4 v00000190a1c22dd0_0;
+    %assign/vec4 v00000190a1c22b50_0, 0;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_00000190a1d1bd30;
+T_1 ;
+    %delay 10000, 0;
+    %load/vec4 v00000190a1c22c90_0;
+    %inv;
+    %store/vec4 v00000190a1c22c90_0, 0, 1;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_00000190a1d1bd30;
+T_2 ;
+    %vpi_call 2 22 "$dumpfile", "edge_wave.vcd" {0 0 0};
+    %vpi_call 2 23 "$dumpvars", 32'sb00000000000000000000000000000000, S_00000190a1d1bd30 {0 0 0};
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000190a1c22c90_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000190a1c22d30_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v00000190a1c22e70_0, 0, 1;
+    %delay 35000, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v00000190a1c22d30_0, 0, 1;
+    %delay 25000, 0;
+    %delay 15000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000190a1c22e70_0, 0, 1;
+    %delay 65000, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v00000190a1c22e70_0, 0, 1;
+    %delay 45000, 0;
+    %vpi_call 2 43 "$display", "edge detector simlation finished" {0 0 0};
+    %vpi_call 2 44 "$finish" {0 0 0};
+    %end;
+    .thread T_2;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    ".\uart_edge_det_tb.v~";
+    "uart_edge_det.v";

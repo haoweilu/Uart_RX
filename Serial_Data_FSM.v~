@@ -1,0 +1,58 @@
+module Serial_Data_FSM(
+	input clk,
+	input rst_n,
+	input in,
+	output reg[7:0] output_data
+);
+	parameter idle = 0, start = 1, data = 2, stop = 3 , error = 4;
+	reg[2:0] state, next_state;
+	reg[3:0] cnt;
+
+	always @(*)begin
+		case(state)
+			idle: next_state = in ? idle : start;
+			start: next_state = data;
+			data: next_state = (cnt==4'd8) ? (in ? stop : error) : data;
+			stop: next_state = in ? idle : error;
+			error: next_state = error;
+			default: next_state = idle;
+		endcase
+	end
+
+	always @(posedge clk or negedge rst_n)begin
+		if(!rst_n)begin
+			state <= idle;
+		end else begin
+			state <= next_state;
+		end
+	end
+
+	always @(posedge clk)begin
+		case(state)
+			idle: output_data <= 8'd0;
+			start: output_data <= 8'd0;
+			data:begin
+			       	output_data <= {in, output_data[7:1]};
+			end
+			stop: output_data <= output_data;
+			default: output_data <= 8'd0;
+		endcase
+	end
+
+	always @(posedge clk or negedge rst_n)begin
+		if(!rst_n)begin
+			cnt <= 8'd0;
+		end else begin
+			if(next_state==data)begin
+				if(cnt==8'd8)begin
+					cnt <= 8'd0;
+				end else begin
+					cnt <= cnt + 1'b1;
+				end
+			end else begin
+				cnt <= 8'd0;
+			end
+		end
+	end
+
+endmodule

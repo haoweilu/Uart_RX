@@ -1,0 +1,19 @@
+module uart_sync(
+	input clk,
+	input rx_in,
+	input rst_n,
+	output reg rx_sync0,
+	output reg rx_sync1
+);
+
+	always @(posedge clk or negedge rst_n)begin
+		if(!rst_n)begin
+			rx_sync0 <= 1'b1;
+			rx_sync1 <= 1'b1;
+		end else begin
+			rx_sync0 <= rx_in;
+			rx_sync1 <= rx_sync0;
+		end
+	end	
+
+endmodule

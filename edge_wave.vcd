@@ -1,0 +1,77 @@
+$date
+	Mon May 25 22:06:39 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module uart_edge_det_tb $end
+$var wire 1 ! start_edge $end
+$var reg 1 " clk $end
+$var reg 1 # rst_n $end
+$var reg 1 $ rx_sync1 $end
+$scope module u_dut $end
+$var wire 1 " clk $end
+$var wire 1 # rst_n $end
+$var wire 1 $ rx_sync1 $end
+$var wire 1 ! start_edge $end
+$var reg 1 % rx_reg $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+1%
+1$
+0#
+0"
+0!
+$end
+#10000
+1"
+#20000
+0"
+#30000
+1"
+#35000
+1#
+#40000
+0"
+#50000
+1"
+#60000
+0"
+#70000
+1"
+#75000
+1!
+0$
+#80000
+0"
+#90000
+0!
+0%
+1"
+#100000
+0"
+#110000
+1"
+#120000
+0"
+#130000
+1"
+#140000
+0"
+1$
+#150000
+1%
+1"
+#160000
+0"
+#170000
+1"
+#180000
+0"
+#185000
