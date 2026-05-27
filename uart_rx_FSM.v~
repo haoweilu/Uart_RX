@@ -7,7 +7,13 @@ module uart_rx_FSM(
 	output reg[7:0] rx_data,
 	output reg rx_data_valid
 );
-	parameter idle = 0, start = 1, data = 2, stop = 3;
+	parameter idle = 0;
+	parameter start = 1,
+	       	data = 2, 
+		stop = 3;
+
+
+
 	reg[2:0] state, next_state;
 	reg[2:0] cnt;
 	reg[7:0] shift_reg;
